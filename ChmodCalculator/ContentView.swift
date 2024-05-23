@@ -18,35 +18,20 @@
 
 import SwiftUI
 
-let symbolicMap: [Character: Int] = [
-    "r": 4,
-    "w": 2,
-    "x": 1,
-    "-": 0
-]
-
-extension String.SubSequence {
-    public func chmodCount() -> Int {
-        var total = 0
-        for char in self {
-            total += symbolicMap[char] ?? 0
-        }
-        return total
-    }
-}
-
 struct ContentView: View {
     // Data repr
     @StateObject private var permissions = Permissions()
     
-    @State private var programmaticSymbolicUpdate = false // Flag to track programmatic updates
-    
     @Environment(\.verticalSizeClass) var verticalSizeClass: UserInterfaceSizeClass?
     @Environment(\.horizontalSizeClass) var horizontalSizeClass: UserInterfaceSizeClass?
     
-    // lock to synchronize access to data repr
-    let inputLock = NSLock()
-    @State private var ignore: UInt8 = 0
+    // Focus state for text fields
+    @FocusState private var focusedField: Field?
+
+    enum Field: Hashable {
+        case numericInput
+        case symbolicInput
+    }
     
     var body: some View {
         VStack {
@@ -56,12 +41,22 @@ struct ContentView: View {
                     #if os(iOS)
                     .keyboardType(.numberPad)
                     .scrollDismissesKeyboard(.immediately)
+                    .textContentType(.none)
+                    .replaceDisabled()
                     #endif
                     .padding()
+                    // Set focus state
+                    .focused($focusedField, equals: .numericInput)
+                    .autocorrectionDisabled()
+                
                 Spacer()
+                
                 TextField("Symbolic", text: $permissions.symbolicInput)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding()
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .padding()
+                    // Set focus state
+                    .focused($focusedField, equals: .symbolicInput)
+                    .autocorrectionDisabled()
             }
             
             if verticalSizeClass == .regular && horizontalSizeClass == .compact {
@@ -121,6 +116,10 @@ struct ContentView: View {
             }
         }
         .padding()
+        .onTapGesture {
+            // Dismiss the keyboard if any area outside the text fields is tapped
+            focusedField = nil
+        }
     }
 }
 

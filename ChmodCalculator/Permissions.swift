@@ -20,6 +20,7 @@ import Combine
 
 @MainActor
 internal class Permissions: ObservableObject {
+    private var counter: UInt8 = 0
     @Published var numericInput: String = "" {
         didSet {
             if numericInput != oldValue {
@@ -28,13 +29,33 @@ internal class Permissions: ObservableObject {
         }
     }
     
-    @Published var symbolicInput: String = "" {
-        didSet {
-            if symbolicInput != oldValue {
+    @Published private var _symbolicInput: String = ""
+        
+    var symbolicInput: String {
+        get {
+            return _symbolicInput
+        }
+        set {
+            if newValue != _symbolicInput {
+                if newValue.contains("\u{2014}") {
+                    //symbolicInput.replacingOccurrences(of: "\u{2014}", with: "c")
+                    _symbolicInput = newValue.replacingOccurrences(of: "\u{2014}", with: "--")
+                    //objectWillChange.send()
+                } else if symbolicInput.contains("\u{2013}") {
+                    _symbolicInput = newValue.replacingOccurrences(of: "\u{2013}", with: "--")
+                } else {
+                    _symbolicInput = newValue
+                }
                 updatePermissionsFromSymbolicInput()
             }
         }
     }
+    
+    /*@Published var symbolicInput: String = "" {
+        didSet {
+            
+        }
+    }*/
     
     @Published var ownerRead: Bool = false {
         didSet { updateInputsFromPermissions() }
@@ -69,6 +90,7 @@ internal class Permissions: ObservableObject {
     private func updatePermissionsFromNumericInput() {
         // Assuming numericInput is in the form of a three-digit octal number (e.g., "755")
         guard numericInput.count == 3 || numericInput.count == 4, let numericValue = Int(numericInput) else {
+            counter = 3*3
             // Clear all permissions if numericInput is not a valid integer
             symbolicInput = "" // Clear symbolicInput
             clearPermissions()
@@ -134,6 +156,10 @@ internal class Permissions: ObservableObject {
     }
     
     private func updateInputsFromPermissions() {
+        if counter > 0 {
+            counter -= 1
+            return
+        }
         let ownerPermissions = (ownerRead ? "r" : "-") + (ownerWrite ? "w" : "-") + (ownerExecute ? "x" : "-")
         let groupPermissions = (groupRead ? "r" : "-") + (groupWrite ? "w" : "-") + (groupExecute ? "x" : "-")
         let publicPermissions = (publicRead ? "r" : "-") + (publicWrite ? "w" : "-") + (publicExecute ? "x" : "-")

@@ -11,6 +11,7 @@
 		B10058CB2BE2E958006AFCEC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10058CA2BE2E958006AFCEC /* ContentView.swift */; };
 		B10058CD2BE2E959006AFCEC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10058CC2BE2E959006AFCEC /* Assets.xcassets */; };
 		B10058D12BE2E959006AFCEC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10058D02BE2E959006AFCEC /* Preview Assets.xcassets */; };
+		B175CB3B2BFF7C5C006EF982 /* StringSubSequence+chmodCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = B175CB3A2BFF7C5C006EF982 /* StringSubSequence+chmodCount.swift */; };
 		B1F345B92BFF55FB0031AC41 /* Permissions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1F345B82BFF55FB0031AC41 /* Permissions.swift */; };
 /* End PBXBuildFile section */
 
@@ -21,6 +22,7 @@
 		B10058CC2BE2E959006AFCEC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B10058CE2BE2E959006AFCEC /* ChmodCalculator.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ChmodCalculator.entitlements; sourceTree = "<group>"; };
 		B10058D02BE2E959006AFCEC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		B175CB3A2BFF7C5C006EF982 /* StringSubSequence+chmodCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StringSubSequence+chmodCount.swift"; sourceTree = "<group>"; };
 		B1F345B82BFF55FB0031AC41 /* Permissions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Permissions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -54,12 +56,13 @@
 		B10058C72BE2E958006AFCEC /* ChmodCalculator */ = {
 			isa = PBXGroup;
 			children = (
-				B10058C82BE2E958006AFCEC /* ChmodCalculatorApp.swift */,
-				B10058CA2BE2E958006AFCEC /* ContentView.swift */,
-				B10058CC2BE2E959006AFCEC /* Assets.xcassets */,
-				B10058CE2BE2E959006AFCEC /* ChmodCalculator.entitlements */,
 				B10058CF2BE2E959006AFCEC /* Preview Content */,
+				B10058CE2BE2E959006AFCEC /* ChmodCalculator.entitlements */,
+				B10058CC2BE2E959006AFCEC /* Assets.xcassets */,
+				B10058CA2BE2E958006AFCEC /* ContentView.swift */,
 				B1F345B82BFF55FB0031AC41 /* Permissions.swift */,
+				B175CB3A2BFF7C5C006EF982 /* StringSubSequence+chmodCount.swift */,
+				B10058C82BE2E958006AFCEC /* ChmodCalculatorApp.swift */,
 			);
 			path = ChmodCalculator;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 			files = (
 				B10058CB2BE2E958006AFCEC /* ContentView.swift in Sources */,
 				B1F345B92BFF55FB0031AC41 /* Permissions.swift in Sources */,
+				B175CB3B2BFF7C5C006EF982 /* StringSubSequence+chmodCount.swift in Sources */,
 				B10058C92BE2E958006AFCEC /* ChmodCalculatorApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
