@@ -23,6 +23,13 @@ struct ChmodCalculatorApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+            #if os(macOS)
+                .frame(minWidth: 350, maxWidth: 350)
+            #endif
         }
+        #if os(macOS)
+        .windowStyle(.titleBar)
+        .windowResizability(.contentSize)
+        #endif
     }
 }
