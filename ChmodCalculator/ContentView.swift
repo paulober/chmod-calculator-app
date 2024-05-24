@@ -17,6 +17,9 @@
 //
 
 import SwiftUI
+#if os(iOS)
+import UniformTypeIdentifiers
+#endif
 
 struct ContentView: View {
     // Data repr
@@ -44,19 +47,32 @@ struct ContentView: View {
                     .textContentType(.none)
                     .replaceDisabled()
                     #endif
-                    .padding()
+                    .padding(.vertical)
                     // Set focus state
                     .focused($focusedField, equals: .numericInput)
                     .autocorrectionDisabled()
+                
+                Button(action: {
+                    copyToPasteboard(permissions.numericInput)
+                }) {
+                    Image(systemName: "doc.on.doc")
+                }
+                .padding(.trailing)
                 
                 Spacer()
                 
                 TextField("Symbolic", text: $permissions.symbolicInput)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
+                    .padding(.vertical)
                     // Set focus state
                     .focused($focusedField, equals: .symbolicInput)
                     .autocorrectionDisabled()
+                
+                Button(action: {
+                    copyToPasteboard(permissions.symbolicInput)
+                }) {
+                    Image(systemName: "doc.on.doc")
+                }
             }
             
             if verticalSizeClass == .regular && horizontalSizeClass == .compact {
@@ -120,6 +136,15 @@ struct ContentView: View {
             // Dismiss the keyboard if any area outside the text fields is tapped
             focusedField = nil
         }
+    }
+    
+    private func copyToPasteboard(_ value: String) {
+        #if os(iOS)
+        UIPasteboard.general.string = value
+        #else
+        NSPasteboard.general.clearContents()
+        NSPasteboard.general.writeObjects([value as NSString])
+        #endif
     }
 }
 
